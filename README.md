@@ -23,12 +23,19 @@ xcaddy build --with github.com/folone/caddy-dns-omglol
 
 ### With Docker
 
-```dockerfile
-FROM caddy:builder AS builder
-RUN xcaddy build --with github.com/folone/caddy-dns-omglol
+A `Dockerfile` is included in this repository. Build it with:
 
-FROM caddy:latest
-COPY --from=builder /usr/bin/caddy /usr/bin/caddy
+```bash
+docker build -t caddy-omglol .
+docker run --rm -v $PWD/Caddyfile:/etc/caddy/Caddyfile caddy-omglol
+```
+
+Or extract just the binary:
+
+```bash
+docker create --name tmp caddy-omglol
+docker cp tmp:/usr/bin/caddy ./caddy
+docker rm tmp
 ```
 
 ## Configuration
